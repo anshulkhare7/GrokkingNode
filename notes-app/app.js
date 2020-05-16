@@ -5,6 +5,28 @@ const yargs = require('yargs');
 const fs = require('fs')
 
 yargs.command({
+    command: 'list',
+    description: 'List all the notes',
+    handler(){
+        notesUtil.getNotes();
+    }
+});
+
+yargs.command({
+    command: 'read',
+    description: 'Return the body of a note',
+    builder : {
+        title: {
+            describe: 'title of the note to be searched',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv){
+        notesUtil.findNote(argv.title);
+    }
+})
+yargs.command({
     command: 'add',
     description: 'Adds new note', 
     builder: {
