@@ -19,7 +19,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(argv){
+    handler(argv){
         notesUtil.addNote(argv.title, argv.body)
     }
 });
@@ -34,12 +34,12 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(argv){
+    handler(argv){
         const removedNote = notesUtil.removeNote(argv.title)
-        if(removedNote==='{}')
-            console.log(chalk.red('No notes removed!'))            
+        if(removedNote ==='{}')  
+            log(chalk.red('No notes removed!'))
         else
-        console.log(chalk.green('Removed Note: '+removedNote))
+            log(chalk.green('Removed Note: '+removedNote))
             
     }
 });
