@@ -1,10 +1,23 @@
-const log = console.log
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
-const request = require('postman-request');
+const address = process.argv[2]
 
-const url = "http://api.weatherstack.com/current?access_key=282da485b5d6848c5a010da06f7efb3f&query=bengaluru"
+if (!address) {
+    console.log('Please provide an address')
+} else {
+    geocode(address, (error, data) => {
+        if (error) {
+            return console.log(error)
+        }
 
-request(url, (err, response, body) => {
-    const data = JSON.parse(body)
-    log(data.current)
-})
+        forecast(data.latitude, data.longitude, (error, forecastData) => {
+            if (error) {
+                return console.log(error)
+            }
+
+            console.log(data.location)
+            console.log(forecastData)
+        })
+    })
+}
