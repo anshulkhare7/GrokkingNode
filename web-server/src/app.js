@@ -1,10 +1,15 @@
-const log = console.log
 const express = require('express')
 const path = require('path')
+const log = console.log
+
 const publicDir = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates')
+
 const webapp = express()
 
+// Handlebar settings
 webapp.set('view engine', 'hbs')
+webapp.set('views', viewsPath)
 webapp.use(express.static(publicDir))
 
 webapp.get('', (req, res) => {
