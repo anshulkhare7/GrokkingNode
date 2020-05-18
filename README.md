@@ -1,5 +1,9 @@
 ## Learning Nodejs from [Udemy course](https://www.udemy.com/course/the-complete-nodejs-developer-course-2/)
 
+### Postman Request (original request module is deprecated)
+
+`npm i postman-request`
+
 ### Nodemon
 
 Hot deploy. Monitor **js** and **hbs** files.

@@ -1,6 +1,10 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+
+const forecast = require('./utils/forecast')
+const geocode = require('./utils/geocode')
+
 const log = console.log
 
 const publicDir = path.join(__dirname, '../public')
@@ -9,7 +13,6 @@ const partialsPath = path.join(__dirname, '../templates/partials')
 
 const webapp = express()
 
-// Handlebar settings
 webapp.set('view engine', 'hbs')
 webapp.set('views', viewsPath)
 webapp.use(express.static(publicDir))
@@ -37,9 +40,35 @@ webapp.get('/help', (req, res) => {
 })
 
 webapp.get('/weather', (req, res) => {
-    res.send({
-        'temperature': 32,
-        'humidity': 100
+    if(!req.query.address){
+        return res.send({
+            'error' : 'Please provide address'
+        })
+    }
+    log('Address: ', req.query.address)
+    geocode(req.query.address, (err, {latitude, longitude, location} = {}) => {
+        if (err) {
+            return res.send({ err })
+        }        
+
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return res.send({ error })                
+           }
+           log('Weather data: ', forecastData)
+
+            res.send({                
+                forecast: forecastData,
+                location,
+                address: req.query.address
+            })            
+        })
+    })        
+});
+
+webapp.get('*', (req, res)=>{
+    res.render('404',{
+        title: "Page not found"
     })
 });
 
