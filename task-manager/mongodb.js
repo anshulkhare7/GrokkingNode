@@ -10,9 +10,19 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client)=>{
     }
     const db = client.db(databaseName)      
     
-    insertTask(db)
-    insertUser(db)  
+    db.collection('tasks').updateMany(
+        {status:true}, 
+        {$set:
+            {status:false}
+        }
+    ).then((result)=>{
+        console.log(result.updatedCount)
+        console.log(result.modifiedCount)
+    }).catch((err)=>{
+        console.log(err)
+    })
 })
+
 
 const insertUser = (db) => {
     db.collection('users').insertOne({
