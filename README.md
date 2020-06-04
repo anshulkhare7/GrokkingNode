@@ -1,4 +1,8 @@
-## Learning Nodejs from [Udemy course](https://www.udemy.com/course/the-complete-nodejs-developer-course-2/)
+## 🎓Learning Nodejs from [Udemy course](https://www.udemy.com/course/the-complete-nodejs-developer-course-2/)
+
+`npm install validator`
+    > const validator = require('validator')
+    > console.log(validator.isURL('https/google.io')) // Print: truě
 
 ### Postman Request (original request module is deprecated)
 
